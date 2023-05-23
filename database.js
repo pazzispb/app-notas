@@ -1,7 +1,7 @@
 const mongooseClient = require("mongoose");
 
 mongooseClient.connect(
-  "mongodb://root:example@localhost:27017/",
+  process.env.DB_CONNECTION_STRING,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     if (err) console.log('Cannot connect to MongoDB', err);
