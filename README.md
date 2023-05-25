@@ -8,7 +8,7 @@ PORT=3000
 -- Crear el contenedor con dockerfile
 
 docker build -t mongo-app-db .
-docker run -d -p 27017:27017 --name mongo-app mongo-notas-db
+docker run -d -p 27017:27017 --name mongo-app mongo-app-db
 
 
 -- Correr la aplicación
