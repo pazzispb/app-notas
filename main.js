@@ -29,65 +29,79 @@ app
   .get((req, res, next) => {
     res.render("notes-add");
   })
-  .post((req, res, next) => {
+  .post(async (req, res, next) => {
     console.log(req.body);
     const Note = new Notes({});
 
     Note.title = req.body.title;
     Note.description = req.body.description;
     //save notes first
-    Note.save((err, product) => {
-      if (err) console.log(err);
+    try {
+      const product = await Note.save();
       console.log(product);
-    });
-    res.redirect("/index");
+      res.redirect("/index");
+    } catch(err) {
+      console.log(err);
+      next(err);
+    }
   });
 
-app.get("/index", (req, res, next) => {
-  Notes.find({}).exec((err, document) => {
-    if (err) console.log(err);
+
+app.get("/index", async (req, res, next) => {
+  try {
+    const document = await Notes.find({}).exec();
     let Data = [];
     document.forEach((value) => {
       Data.push(value);
     });
     res.render("view", { data: Data });
-  });
+  } catch (err) {
+    console.log(err);
+    next(err); // Pass the error to Express.js error handling middleware
+  }
 });
 
-app.get("/delete/:__id", (req, res, next) => {
-  Notes.findByIdAndRemove(
-    req.params.__id,
-    { useFindAndModify: false },
-    (err, document) => {
-      if (err) console.log(err);
-      console.log(document);
-    }
-  );
-  res.redirect("/index");
-});
-
-app.get("/updatepage/:__id", (req, res) => {
-  console.log("id for get request: " + req.id);
-  Notes.findById(req.id, (err, document) => {
+app.get("/delete/:__id", async (req, res, next) => {
+  try {
+    const document = await Notes.findByIdAndRemove(req.params.__id, { useFindAndModify: false });
     console.log(document);
+    res.redirect("/index");
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
 
+
+app.get("/updatepage/:__id", async (req, res) => {
+  try {
+    console.log("id for get request: " + req.params.__id);
+    const document = await Notes.findById(req.params.__id);
+    console.log(document);
     res.render("updatepage", { data: document });
-  });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 });
 
-app.post("/updatepage", (req, res, next) => {
-  console.log("id: " + req.id);
-  Notes.findByIdAndUpdate(
-    req.id,
-    { title: req.body.title, description: req.body.description },
-    { useFindAndModify: false },
-    (err, document) => {
-      console.log("updated");
-    }
-  );
-  res.redirect("/index");
-  return next();
+
+app.post("/updatepage", async (req, res, next) => {
+  try {
+    console.log("id: " + req.body.id);
+    const document = await Notes.findByIdAndUpdate(
+      req.body.id,
+      { title: req.body.title, description: req.body.description },
+      { useFindAndModify: false }
+    );
+    console.log("updated");
+    res.redirect("/index");
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 });
+
 
 
 const port = process.env.PORT;
