@@ -103,11 +103,7 @@ app.post("/updatepage", async (req, res, next) => {
 });
 
 
-
 const port = process.env.PORT;
-console.log(port);
-
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
