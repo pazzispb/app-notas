@@ -13,3 +13,4 @@ docker run -d -p 27017:27017 --name mongo-app mongo-notas-db
 
 -- Correr la aplicación
 node main.js
+Ruta: http://localhost:3000/notes-add
