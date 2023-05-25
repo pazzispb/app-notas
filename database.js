@@ -1,13 +1,18 @@
 const mongooseClient = require("mongoose");
+require('dotenv').config();
 
-mongooseClient.connect(
-  "mongodb://root:example@localhost:27017/",
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  (err) => {
-    if (err) console.log('Cannot connect to MongoDB', err);
-    else console.log('Connected to MongoDB');
-  } 
-);
+
+const cn = process.env.DB_CONNECTION_STRING
+console.log(cn);
+
+mongooseClient.connect(cn, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+    // Additional code or logic after successful connection
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 
 const NotesSchema = mongooseClient.Schema({
