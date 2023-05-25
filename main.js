@@ -3,6 +3,8 @@ const body_parser = require("body-parser");
 const path = require("path");
 const pug = require("pug");
 
+require('dotenv').config();
+
 const Notes = require("./database");
 const updateRouter = require("./update-router");
 const app = express();
@@ -87,6 +89,13 @@ app.post("/updatepage", (req, res, next) => {
   return next();
 });
 
-app.listen((arg) => {
-  console.log("Server started.");
+
+const port = process.env.PORT;
+console.log(port);
+
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
+
