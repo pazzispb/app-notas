@@ -1,0 +1,14 @@
+version: "3"
+services:
+  web:
+    image: johan3118/my-web-app:1.0
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+  db:
+    image: johan3118/my-db-app:1.0
+    volumes:
+      - dbdata:/data/db
+volumes:
+  dbdata:
