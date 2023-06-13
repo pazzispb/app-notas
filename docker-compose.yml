@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: johan3118/my-web-app:1.0
+    image: johan3118/my-web-app:1.0.0
     ports:
       - 3000:3000
     depends_on:

@@ -5,7 +5,7 @@ const pug = require("pug");
 
 require('dotenv').config();
 
-const Notes = require("./database");
+const Notes = require("./db/database");
 const updateRouter = require("./update-router");
 const app = express();
 
@@ -40,7 +40,7 @@ app
       const product = await Note.save();
       console.log(product);
       res.redirect("/index");
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       next(err);
     }
@@ -108,4 +108,3 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
