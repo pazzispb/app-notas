@@ -1,12 +1,23 @@
-# Use the official Docker image for MongoDB.
-FROM mongo:latest
+# Use the official Node.js image as the base image.
+FROM node:latest
 
-# Set the working directory in the container to /data/db (this is where MongoDB stores its data)
-WORKDIR /data/db
+# Set the working directory in the container to /app.
+WORKDIR /app
 
-# The default port for MongoDB
-EXPOSE 27017
+# Copy package.json and yarn.lock to the container.
+COPY package.json yarn.lock ./
 
-# The default command to run when the container starts
-CMD ["mongod"]
+# Install dependencies using Yarn.
+RUN yarn install --production
 
+# Copy the rest of the application code to the container.
+COPY . .
+
+# Expose the port your application listens on.
+EXPOSE 3000
+
+# Set any necessary environment variables.
+ENV NODE_ENV production
+
+# The default command to run when the container starts.
+CMD [ "node", "main.js" ]

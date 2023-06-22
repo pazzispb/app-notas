@@ -1,42 +1,25 @@
-# Aplicación app-notas
+-- Archivo .env
 
-## Equipo de trabajo
-- Pazzis Paulino 1103790
-- Paola Saldaña 1104081
-- Alexa Guzmán 1101488
-- Johan Contreras 1106473
-- Allen Silverio 1104220
+.env :
 
-## Descripción de la asignación
-Han de escoger una de las dos apps compartidas y aplicar 12 factores a la misma, e implementar los siguientes puntos:
+DB_CONNECTION_STRING=mongodb://db:27017
+PORT=3000
 
-- Code Base (I)
-- Dependencias (II)
-- Config (III)
-- Backing Services (IV)
-- Port Binding (VII)
+-- Hacer login en docker
+docker login
 
-## Requerimientos de la aplicación
-1. Docker
-2. NodeJS
-3. Instalar las dependencias de la aplicación con el comando `npm install`
+-- Crear el contenedor con para la base de datos con el dockerfile, esto debe hacerse en la direcion de "/db/"
 
-## Pasos para ejecutar la aplicación
+docker build -t tu-usuario-dockerhub/my-db-app .
+docker tag tu-usuario-dockerhub/my-db-app tu-usuario-dockerhub/my-db-app:1.0
+docker push tu-usuario-dockerhub/my-db-app:1.0
 
-### 1. Se debe tener un archivo .env con las siguientes variables de entorno:
+-- Crear el contenedor con para la app con el dockerfile, esto debe hacerse en la direcion del repositorio
 
-`DB_CONNECTION_STRING=mongodb://localhost:27017`
+docker build -t tu-usuario-dockerhub/my-web-app .
+docker tag tu-usuario-dockerhub/my-web-app tu-usuario-dockerhub/my-web-app:1.0
+docker push tu-usuario-dockerhub/my-web-app:1.0
 
-`PORT=3000`
-
-### 2. Crear el contenedor con dockerfile
-
-`docker build -t mongo-app-db .`
-
-`docker run -d -p 27017:27017 --name mongo-app mongo-app-db`
-
-
-### 3. Correr la aplicación
-`node main.js`
-
+-- Correr la aplicación
+docker-compose up
 Ruta: http://localhost:3000/notes-add
