@@ -14,5 +14,5 @@ body
                         span(class="f5 db lh-copy measure")=val.description
 
                     div(class="ph3 mt4")
-                    a(href='delete/' + val._id, class="f6 link dim br2 ba ph3 pv2 mb2 mh1 dib red") Eliminar
-                    a(href='updatepage/' + val._id, class="f6 link dim br2 ba ph3 pv2 mb2 mh1 dib blue") Actualizar
+                    a(href=`/delete/${val.id}`, class="f6 link dim br2 ba ph3 pv2 mb2 mh1 dib red") Eliminar
+                    a(href=`/updatepage/${val.id}`, class="f6 link dim br2 ba ph3 pv2 mb2 mh1 dib blue") Actualizar

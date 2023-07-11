@@ -32,4 +32,4 @@ docker push tu-usuario-dockerhub/my-web-app:1.0.0
 
 -- Correr la aplicación
 docker-compose up
-Ruta: http://localhost:3000/notes-add
+Ruta:http://localhost:3000/notes-add

@@ -5,12 +5,12 @@ style
     include style.css
 body
     main(main class="pa4 black-80")
-        form(method='POST' action='/updatepage' class="measure center")
+        form(method='POST' action=`/updatepage/${data.id}` class="measure center")
             fieldset( class="ba b--transparent ph0 mh0")
                 legend(class="f4 fw6 ph0 mh0") Actualizar Nota
                 div(class="mt3")
                     label(class="db fw6 lh-copy f6 pv2" for="title") T&iacute;tulo
-                    input(type='text', name='title', class="br2 pa2 input-reset ba bg-transparent b--black-20 pa2 w-100" value=data.title)
+                    input(type='text', name='title', class="br2 pa2 input-reset ba bg-transparent b--black-20 pa2 w-100" value=`${data.title}`)
 
                     label(class="db fw6 lh-copy f6 pv2" for="description") Detalle
                     textarea(rows=3, name='description', class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" )=data.description
