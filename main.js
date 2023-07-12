@@ -3,8 +3,6 @@ const path = require("path");
 const pug = require("pug");
 const axios = require("axios");
 const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("graphql");
-const Notes = require("./db/database");
 
 require("dotenv").config();
 
@@ -20,68 +18,6 @@ app.use((req, res, next) => {
   console.log(req.method + " : " + req.url);
   next();
 });
-
-const schema = buildSchema(`
-  type Note {
-    id: ID
-    title: String
-    description: String
-  }
-
-  type Query {
-    getAllNotes: [Note]
-    getNoteById(id: ID): Note
-  }
-
-  type Mutation {
-    addNote(title: String!, description: String!): Note
-    deleteNote(id: ID): Note
-    updateNote(id: ID!, title: String, description: String): Note
-  }
-`);
-
-const root = {
-  getAllNotes: async () => {
-    try {
-      return await Notes.find({});
-    } catch (err) {
-      throw new Error(err);
-    }
-  },
-
-  getNoteById: async ({ id }) => {
-    try {
-      return await Notes.findById(id);
-    } catch (err) {
-      throw new Error(err);
-    }
-  },
-
-  addNote: async ({ title, description }) => {
-    try {
-      const note = new Notes({ title, description });
-      return await note.save();
-    } catch (err) {
-      throw new Error(err);
-    }
-  },
-
-  deleteNote: async ({ id }) => {
-    try {
-      return await Notes.findByIdAndRemove(id);
-    } catch (err) {
-      throw new Error(err);
-    }
-  },
-
-  updateNote: async ({ id, title, description }) => {
-    try {
-      return await Notes.findByIdAndUpdate(id, { title, description }, { new: true });
-    } catch (err) {
-      throw new Error(err);
-    }
-  },
-};
 
 app.use(
   "/graphql",
